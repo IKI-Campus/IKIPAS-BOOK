@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Polyfill & Shim for sandbox iframe fetch property assignment -->
+  <script>
+    (function() {
+      try {
+        var origFetch = window.fetch ? window.fetch.bind(window) : function() {
+          return Promise.reject(new Error("fetch not available"));
+        };
+        var currentFetch = origFetch;
+        Object.defineProperty(window, 'fetch', {
+          get: function() {
+            return currentFetch;
+          },
+          set: function(fn) {
+            currentFetch = fn;
+          },
+          configurable: true,
+          enumerable: true
+        });
+      } catch (err) {
+        // Fallback silently if already configurable
+      }
+    })();
+  </script>
+
+  <!-- Primary Meta Tags -->
+  <title>IKIPAS | التوجيه والكتب التعليمية والتحضير للبكالوريا</title>
+  <meta name="title" content="IKIPAS | التوجيه والكتب التعليمية والتحضير للبكالوريا">
+  <meta name="description" content="منصة متخصصة في التوجيه الدراسي والمهني، وتوفير الموارد والكتب التعليمية لمساعدة التلاميذ والطلبة على بناء مسار دراسي ومهني أكثر وضوحاً.">
+  <meta name="keywords" content="IKIPAS, توجيه دراسي, توجيه مهني, بكالوريا المغرب, كتب البكالوريا, رياضيات باك, فيزياء كيمياء باك, علوم الحياة والارض, Bac Maroc, Orientation scolaire, Préparation Bac">
+  <meta name="author" content="IKIPAS">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="IKIPAS | التوجيه والكتب التعليمية والتحضير للبكالوريا">
+  <meta property="og:description" content="منصة متخصصة في التوجيه الدراسي والمهني، وتوفير الموارد والكتب التعليمية لمساعدة التلاميذ والطلبة على بناء مسار دراسي ومهني أكثر وضوحاً.">
+  <meta property="og:image" content="logo-ikipas.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="IKIPAS | التوجيه والكتب التعليمية والتحضير للبكالوريا">
+  <meta property="twitter:description" content="الخطوة الأولى نحو شغفك - منصة التوجيه والكتب التعليمية بالمغرب.">
+  <meta property="twitter:image" content="logo-ikipas.jpg">
+
+  <!-- Favicon & Theme Colors -->
+  <meta name="theme-color" content="#07111F">
+  <link rel="icon" type="image/jpeg" href="logo-ikipas.jpg">
+
+  <!-- Google Fonts: Cairo, Plus Jakarta Sans, Tajawal & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "IKIPAS",
+    "url": "https://ikipas.vercel.app",
+    "logo": "https://ikipas.vercel.app/logo-ikipas.jpg",
+    "slogan": "Le premier pas vers votre passion - الخطوة الأولى نحو شغفك",
+    "description": "منصة متخصصة في التوجيه الدراسي والمهني، وتوفير الموارد والكتب التعليمية لمساعدة التلاميذ والطلبة على بناء مسار دراسي ومهني أكثر وضوحاً.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+212700635666",
+      "contactType": "customer service",
+      "areaServed": "MA",
+      "availableLanguage": ["Arabic", "French", "English"]
+    }
+  }
+  </script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ambient Scientific Background Canvas Elements -->
+  <div class="bg-mesh" aria-hidden="true">
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-glow bg-glow-3"></div>
+    <div class="scientific-grid-pattern"></div>
+  </div>
+
+  <!-- HEADER -->
+  <header id="mainHeader" class="header">
+    <div class="container nav-container">
+      
+      <!-- Brand Logo -->
+      <a href="#home" class="brand" aria-label="IKIPAS Accueil">
+        <div class="brand-logo-glow"></div>
+        <img id="navLogoImg" src="logo-ikipas.jpg" alt="IKIPAS Logo" class="brand-logo" onerror="handleImageError(this)">
+        <div class="brand-meta">
+          <span class="brand-text">IKIPAS</span>
+          <span class="brand-subtext" data-ar="المنصة التعليمية والتوجيهية" data-fr="Plateforme Éducative" data-en="EdTech Platform">المنصة التعليمية والتوجيهية</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="nav-links" id="desktopNav">
+        <a href="#home" class="nav-link active" data-ar="الرئيسية" data-fr="Accueil" data-en="Home">الرئيسية</a>
+        <a href="#about" class="nav-link" data-ar="من نحن" data-fr="À propos" data-en="About Us">من نحن</a>
+        <a href="#books" class="nav-link" data-ar="الكتب" data-fr="Livres" data-en="Books">الكتب</a>
+        <a href="#team" class="nav-link" data-ar="الفريق" data-fr="Équipe" data-en="Team">الفريق</a>
+        <a href="#contact" class="nav-link" data-ar="تواصل معنا" data-fr="Contact" data-en="Contact">تواصل معنا</a>
+      </nav>
+
+      <!-- Header Actions: Language Switcher & Quick Contact & Mobile Hamburger -->
+      <div class="header-actions">
+        
+        <!-- Language Switcher -->
+        <div class="lang-switch-group" role="group" aria-label="Language Selector">
+          <button type="button" class="lang-btn active" id="btn-lang-ar" onclick="setLanguage('ar')" aria-pressed="true">AR</button>
+          <button type="button" class="lang-btn" id="btn-lang-fr" onclick="setLanguage('fr')" aria-pressed="false">FR</button>
+          <button type="button" class="lang-btn" id="btn-lang-en" onclick="setLanguage('en')" aria-pressed="false">EN</button>
+        </div>
+
+        <!-- Header Direct WhatsApp Action (Desktop) -->
+        <a href="https://wa.me/212700635666" target="_blank" rel="noopener noreferrer" class="btn btn-header-whatsapp" aria-label="WhatsApp Contact">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <span class="header-wa-text" data-ar="طلب واستشارة" data-fr="Commande & Conseil" data-en="Order & Advice">طلب واستشارة</span>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="mobile-menu-btn" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div class="mobile-drawer" id="mobileDrawer">
+      <nav class="mobile-nav-links">
+        <a href="#home" class="mobile-nav-link" onclick="closeMobileMenu()" data-ar="الرئيسية" data-fr="Accueil" data-en="Home">الرئيسية</a>
+        <a href="#about" class="mobile-nav-link" onclick="closeMobileMenu()" data-ar="من نحن" data-fr="À propos" data-en="About Us">من نحن</a>
+        <a href="#books" class="mobile-nav-link" onclick="closeMobileMenu()" data-ar="الكتب" data-fr="Livres" data-en="Books">الكتب</a>
+        <a href="#team" class="mobile-nav-link" onclick="closeMobileMenu()" data-ar="الفريق" data-fr="Équipe" data-en="Team">الفريق</a>
+        <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()" data-ar="تواصل معنا" data-fr="Contact" data-en="Contact">تواصل معنا</a>
+      </nav>
+      <div class="mobile-contact-cta">
+        <a href="https://wa.me/212700635666" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp w-full">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <span data-ar="تواصل عبر WhatsApp" data-fr="Contacter via WhatsApp" data-en="Chat via WhatsApp">تواصل عبر WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero-section">
+      <!-- Scientific Decorative Geometry -->
+      <div class="hero-geometric-bg" aria-hidden="true">
+        <div class="geo-circle geo-circle-1"></div>
+        <div class="geo-circle geo-circle-2"></div>
+        <div class="geo-grid-overlay"></div>
+      </div>
+
+      <div class="container hero-grid">
+        
+        <!-- Hero Text Column -->
+        <div class="hero-text-col">
+          
+          <!-- Badge -->
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            <span class="badge-brand">IKIPAS</span>
+            <span class="badge-divider">|</span>
+            <span data-ar="المنصة المتخصصة في التوجيه والكتب التعليمية" data-fr="Plateforme d'Orientation & Livres Éducatifs" data-en="Orientation & Educational Resources">المنصة المتخصصة في التوجيه والكتب التعليمية</span>
+          </div>
+
+          <!-- Main Title -->
+          <h1 class="hero-title">IKIPAS</h1>
+
+          <!-- Slogan -->
+          <div class="hero-slogan" data-ar="الخطوة الأولى نحو شغفك" data-fr="Le premier pas vers votre passion" data-en="The first step towards your passion">
+            الخطوة الأولى نحو شغفك
+          </div>
+
+          <!-- Professional Description -->
+          <p class="hero-subtitle" 
+             data-ar="منصة متخصصة في التوجيه الدراسي والمهني، وتوفير الموارد والكتب التعليمية لمساعدة التلاميذ والطلبة على بناء مسار دراسي ومهني أكثر وضوحاً."
+             data-fr="Une plateforme spécialisée dans l'orientation scolaire et professionnelle, fournissant des ressources et des livres éducatifs pour aider les élèves et étudiants à bâtir un parcours académique et professionnel plus clair."
+             data-en="A specialized platform in academic and professional orientation, providing educational resources and books to help students build a clearer academic and career path.">
+            منصة متخصصة في التوجيه الدراسي والمهني، وتوفير الموارد والكتب التعليمية لمساعدة التلاميذ والطلبة على بناء مسار دراسي ومهني أكثر وضوحاً.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="hero-cta-group">
+            <a href="#books" class="btn btn-primary" id="heroBtnBooks">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              <span data-ar="اكتشف الكتب" data-fr="Découvrir les livres" data-en="Explore books">اكتشف الكتب</span>
+            </a>
+            
+            <a href="#contact" class="btn btn-secondary" id="heroBtnContact">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              <span data-ar="تواصل معنا" data-fr="Contactez-nous" data-en="Contact us">تواصل معنا</span>
+            </a>
+          </div>
+
+          <!-- Hero Small Value Badges -->
+          <div class="hero-features-chips">
+            <div class="hero-chip">
+              <div class="chip-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <span data-ar="التوجيه الدراسي" data-fr="Orientation scolaire" data-en="Academic orientation">التوجيه الدراسي</span>
+            </div>
+            <div class="hero-chip">
+              <div class="chip-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <span data-ar="الكتب التعليمية" data-fr="Livres éducatifs" data-en="Educational books">الكتب التعليمية</span>
+            </div>
+            <div class="hero-chip">
+              <div class="chip-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <span data-ar="التحضير للامتحانات" data-fr="Préparation aux examens" data-en="Exam preparation">التحضير للامتحانات</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Hero Visual Column -->
+        <div class="hero-visual-col">
+          <div class="visual-wrapper">
+            
+            <!-- Glow backdrop -->
+            <div class="visual-card-bg"></div>
+
+            <!-- Central Brand Card with Logo -->
+            <div class="main-visual-card">
+              <div class="card-glass-specular"></div>
+              <div class="visual-logo-container">
+                <div class="visual-logo-pulse"></div>
+                <img src="logo-ikipas.jpg" alt="IKIPAS Logo" class="hero-logo-display" onerror="handleImageError(this)">
+              </div>
+              <div class="visual-card-footer">
+                <div class="visual-brand-badge">
+                  <span class="pulse-indicator"></span>
+                  <span class="visual-title">IKIPAS</span>
+                </div>
+                <span class="visual-subtitle" data-ar="الخطوة الأولى نحو شغفك" data-fr="Le premier pas vers votre passion" data-en="The first step towards your passion">الخطوة الأولى نحو شغفك</span>
+              </div>
+            </div>
+
+            <!-- Floating Badge Top -->
+            <div class="floating-badge badge-top">
+              <div class="f-icon f-icon-blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              </div>
+              <div class="f-text">
+                <strong data-ar="التوجيه الدراسي والمهني" data-fr="Orientation Scolaire & Pro" data-en="Academic & Career Guidance">التوجيه الدراسي والمهني</strong>
+                <span data-ar="مرافقة متخصصة ومبنية على التحليل" data-fr="Accompagnement personnalisé" data-en="Personalized mentorship">مرافقة متخصصة ومبنية على التحليل</span>
+              </div>
+            </div>
+
+            <!-- Floating Badge Bottom -->
+            <div class="floating-badge badge-bottom">
+              <div class="f-icon f-icon-green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div class="f-text">
+                <strong data-ar="كتب وموارد التحضير للبكالوريا" data-fr="Livres de Préparation au Bac" data-en="Baccalaureate Prep Books">كتب وموارد التحضير للبكالوريا</strong>
+                <span data-ar="منهجية واضحة وتمارين متدرجة" data-fr="Méthodologie & exercices" data-en="Clear methodology & exercises">منهجية واضحة وتمارين متدرجة</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section about-section">
+      <div class="container">
+        
+        <!-- Section Header -->
+        <div class="section-header">
+          <div class="section-badge-wrap">
+            <span class="section-pill" data-ar="من نحن" data-fr="À propos" data-en="About Us">من نحن</span>
+          </div>
+          <h2 class="section-title" data-ar="من نحن" data-fr="À propos de nous" data-en="About Us">
+            من نحن
+          </h2>
+          <p class="section-desc" 
+             data-ar="IKIPAS هي منصة تهدف إلى تقديم خدمات ومحتويات تساعد التلاميذ والطلبة على اتخاذ قرارات أفضل في مسارهم الدراسي والمهني، مع توفير كتب وموارد تعليمية تساعدهم على الاستعداد والنجاح."
+             data-fr="IKIPAS est une plateforme qui vise à fournir des services et des contenus pour aider les élèves et étudiants à prendre de meilleures décisions dans leur parcours académique et professionnel, tout en offrant des livres et des ressources pédagogiques pour les aider à se préparer et à réussir."
+             data-en="IKIPAS is a platform aimed at providing services and content that help students make better decisions in their academic and professional paths, while providing educational books and resources to help them prepare and succeed.">
+            IKIPAS هي منصة تهدف إلى تقديم خدمات ومحتويات تساعد التلاميذ والطلبة على اتخاذ قرارات أفضل في مسارهم الدراسي والمهني، مع توفير كتب وموارد تعليمية تساعدهم على الاستعداد والنجاح.
+          </p>
+        </div>
+
+        <!-- 3 Feature Cards: التوجيه, كتب تعليمية, الاستعداد للامتحانات -->
+        <div class="about-cards-grid">
+          
+          <!-- Card 1: التوجيه -->
+          <div class="feature-card">
+            <div class="card-glow-edge"></div>
+            <div class="feature-card-header">
+              <span class="feature-num">01</span>
+              <div class="feature-icon icon-purple">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              </div>
+            </div>
+            <h3 class="feature-title" data-ar="التوجيه" data-fr="Orientation" data-en="Orientation">
+              التوجيه
+            </h3>
+            <p class="feature-text" 
+               data-ar="مساعدة التلميذ على استكشاف ميولاته وقدراته، واختيار الشعب والمسارات الجامعية والمهنية المناسبة وفق رؤية واضحة ومبنية على المعرفة والتحليل."
+               data-fr="Aider l'élève à explorer ses intérêts et ses capacités, et à choisir les filières et parcours universitaires et professionnels appropriés avec une vision claire."
+               data-en="Helping students explore their interests and capabilities, choosing appropriate academic and career paths with a clear, analysis-driven vision.">
+              مساعدة التلميذ على استكشاف ميولاته وقدراته، واختيار الشعب والمسارات الجامعية والمهنية المناسبة وفق رؤية واضحة ومبنية على المعرفة والتحليل.
+            </p>
+            <div class="feature-footer-decor">
+              <span class="decor-line"></span>
+              <span class="decor-dot"></span>
+            </div>
+          </div>
+
+          <!-- Card 2: كتب تعليمية -->
+          <div class="feature-card">
+            <div class="card-glow-edge"></div>
+            <div class="feature-card-header">
+              <span class="feature-num">02</span>
+              <div class="feature-icon icon-blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              </div>
+            </div>
+            <h3 class="feature-title" data-ar="كتب تعليمية" data-fr="Livres éducatifs" data-en="Educational Books">
+              كتب تعليمية
+            </h3>
+            <p class="feature-text" 
+               data-ar="إصدارات عملية متخصصة في الرياضيات، الفيزياء والكيمياء، وعلوم الحياة والأرض تركز على تنظيم الدروس، فهم المفاهيم الأساسية، والتدريب على التطبيقات."
+               data-fr="Des ouvrages spécialisés en mathématiques, physique-chimie et SVT axés sur l'organisation des leçons, la maîtrise des concepts et la pratique appliquée."
+               data-en="Specialized practical editions in mathematics, physics-chemistry, and life & earth sciences focusing on structured lessons and hands-on applications.">
+              إصدارات عملية متخصصة في الرياضيات، الفيزياء والكيمياء، وعلوم الحياة والأرض تركز على تنظيم الدروس، فهم المفاهيم الأساسية، والتدريب على التطبيقات.
+            </p>
+            <div class="feature-footer-decor">
+              <span class="decor-line"></span>
+              <span class="decor-dot"></span>
+            </div>
+          </div>
+
+          <!-- Card 3: الاستعداد للامتحانات -->
+          <div class="feature-card">
+            <div class="card-glow-edge"></div>
+            <div class="feature-card-header">
+              <span class="feature-num">03</span>
+              <div class="feature-icon icon-green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              </div>
+            </div>
+            <h3 class="feature-title" data-ar="الاستعداد للامتحانات" data-fr="Préparation aux examens" data-en="Exam Preparation">
+              الاستعداد للامتحانات
+            </h3>
+            <p class="feature-text" 
+               data-ar="بناء منهجية تفكير وحل متكاملة وتدريب متدرج يساعد التلاميذ على خوض امتحانات البكالوريا والامتحانات الإشهادية بثقة واستعداد تام."
+               data-fr="Développer une méthodologie complète de réflexion et de résolution pour aborder les épreuves du Baccalauréat avec sérénité et pleine confiance."
+               data-en="Building a comprehensive thinking and problem-solving methodology with progressive training to tackle Baccalaureate exams with total confidence.">
+              بناء منهجية تفكير وحل متكاملة وتدريب متدرج يساعد التلاميذ على خوض امتحانات البكالوريا والامتحانات الإشهادية بثقة واستعداد تام.
+            </p>
+            <div class="feature-footer-decor">
+              <span class="decor-line"></span>
+              <span class="decor-dot"></span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- BOOKS SECTION (مكتبة IKIPAS / كتب التحضير للبكالوريا) -->
+    <section id="books" class="section books-section">
+      <div class="container">
+        
+        <!-- Section Header -->
+        <div class="section-header">
+          <div class="section-badge-wrap">
+            <span class="section-pill" data-ar="مكتبة IKIPAS" data-fr="Bibliothèque IKIPAS" data-en="IKIPAS Library">مكتبة IKIPAS</span>
+          </div>
+          <h2 class="section-title" data-ar="كتب التحضير للبكالوريا" data-fr="Livres de Préparation au Bac" data-en="Baccalaureate Preparation Books">
+            كتب التحضير للبكالوريا
+          </h2>
+          <p class="section-desc" 
+             data-ar="اختر مادتك واكتشف كتب IKIPAS المصممة خصيصاً لمساعدتك على تنظيم المراجعة، فهم المفاهيم وتطوير منهجية الحل."
+             data-fr="Choisissez votre matière et découvrez les manuels IKIPAS conçus pour structurer vos révisions et maîtriser la méthodologie de résolution."
+             data-en="Choose your subject and discover IKIPAS books designed specifically to help you organize revisions, understand concepts, and master solving methods.">
+            اختر مادتك واكتشف كتب IKIPAS المصممة خصيصاً لمساعدتك على تنظيم المراجعة، فهم المفاهيم وتطوير منهجية الحل.
+          </p>
+        </div>
+
+        <!-- Books Grid -->
+        <div class="books-grid">
+          
+          <!-- BOOK 1: MATHÉMATIQUES -->
+          <article class="book-card" id="card-math">
+            <div class="book-card-inner">
+              <div class="book-cover-wrap">
+                <div class="cover-shine-effect"></div>
+                <img src="images/mathematiques.jpg" alt="الرياضيات: التحضير للبكالوريا" class="book-cover-img" onerror="handleImageError(this)">
+                <span class="book-tag" data-ar="الرياضيات" data-fr="Mathématiques" data-en="Mathematics">الرياضيات</span>
+              </div>
+              <div class="book-body">
+                <div class="book-meta-top">
+                  <span class="book-edition-badge">IKIPAS EDITIONS</span>
+                  <span class="book-curriculum-badge">BAC MAROC</span>
+                </div>
+                <h3 class="book-title" data-ar="الرياضيات: التحضير للبكالوريا" data-fr="Mathématiques : Préparation au Bac" data-en="Mathematics : Baccalaureate Preparation">الرياضيات: التحضير للبكالوريا</h3>
+                <p class="book-desc" 
+                   data-ar="كتاب عملي مصمم لمساعدة التلميذ على تنظيم مراجعة مادة الرياضيات، وفهم المفاهيم الأساسية، ثم الانتقال تدريجياً إلى التطبيق من خلال تمارين متنوعة. يهدف إلى بناء منهجية واضحة في التفكير والحل، ومساعدة التلميذ على الاستعداد بشكل أفضل لامتحانات البكالوريا."
+                   data-fr="Un guide pratique conçu pour aider l'élève à structurer ses révisions en mathématiques, comprendre les concepts fondamentaux et passer progressivement à l'application grâce à des exercices variés. Il vise à bâtir une méthodologie claire de réflexion et de résolution pour préparer au mieux les épreuves du Baccalauréat."
+                   data-en="A practical guide designed to help students organize their mathematics revision, understand core concepts, and transition smoothly into problem-solving through diverse exercises. It aims to build a clear problem-solving methodology and prepare students for the Baccalaureate examinations.">
+                  كتاب عملي مصمم لمساعدة التلميذ على تنظيم مراجعة مادة الرياضيات، وفهم المفاهيم الأساسية، ثم الانتقال تدريجياً إلى التطبيق من خلال تمارين متنوعة. يهدف إلى بناء منهجية واضحة في التفكير والحل، ومساعدة التلميذ على الاستعداد بشكل أفضل لامتحانات البكالوريا.
+                </p>
+
+                <!-- Strengths List -->
+                <ul class="book-strengths">
+                  <li data-ar="تنظيم الدروس" data-fr="Organisation des cours" data-en="Structured lessons">تنظيم الدروس</li>
+                  <li data-ar="تمارين متدرجة" data-fr="Exercices progressifs" data-en="Progressive exercises">تمارين متدرجة</li>
+                  <li data-ar="منهجية الحل" data-fr="Méthodologie de résolution" data-en="Problem-solving methodology">منهجية الحل</li>
+                  <li data-ar="تطبيقات متنوعة" data-fr="Applications variées" data-en="Diverse applications">تطبيقات متنوعة</li>
+                  <li data-ar="التحضير للبكالوريا" data-fr="Préparation au Baccalauréat" data-en="Baccalaureate preparation">التحضير للبكالوريا</li>
+                </ul>
+
+                <!-- Actions -->
+                <div class="book-actions-group">
+                  <button type="button" class="btn btn-outline" onclick="openBookModal('math')" aria-label="Book Information">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    <span data-ar="معلومات الكتاب" data-fr="Détails du Livre" data-en="Book Info">معلومات الكتاب</span>
+                  </button>
+                  <button type="button" class="btn btn-whatsapp" onclick="directOrderBook('math')" aria-label="Order Book on WhatsApp">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <span data-ar="طلب الكتاب" data-fr="Commander" data-en="Order Book">طلب الكتاب</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- BOOK 2: PHYSIQUE-CHIMIE -->
+          <article class="book-card" id="card-physics">
+            <div class="book-card-inner">
+              <div class="book-cover-wrap">
+                <div class="cover-shine-effect"></div>
+                <img src="images/physique-chimie.jpg" alt="الفيزياء والكيمياء: التحضير للبكالوريا" class="book-cover-img" onerror="handleImageError(this)">
+                <span class="book-tag tag-cyan" data-ar="الفيزياء والكيمياء" data-fr="Physique-Chimie" data-en="Physics & Chemistry">الفيزياء والكيمياء</span>
+              </div>
+              <div class="book-body">
+                <div class="book-meta-top">
+                  <span class="book-edition-badge">IKIPAS EDITIONS</span>
+                  <span class="book-curriculum-badge">BAC MAROC</span>
+                </div>
+                <h3 class="book-title" data-ar="الفيزياء والكيمياء: التحضير للبكالوريا" data-fr="Physique-Chimie : Préparation au Bac" data-en="Physics-Chemistry : Baccalaureate Preparation">الفيزياء والكيمياء: التحضير للبكالوريا</h3>
+                <p class="book-desc" 
+                   data-ar="مرجع يساعد التلميذ على فهم المفاهيم والقوانين الأساسية في الفيزياء والكيمياء، مع التركيز على كيفية توظيفها في حل التمارين. الكتاب يجمع بين الفهم والتطبيق والتدرب على منهجية التحليل والحل استعداداً للبكالوريا."
+                   data-fr="Un ouvrage de référence pour aider l'élève à comprendre les concepts et lois fondamentales en physique et en chimie, en mettant l'accent sur leur application directe dans les exercices. Il combine compréhension, pratique et méthodologie d'analyse pour réussir le Bac."
+                   data-en="A specialized reference helping students understand core physical laws and chemical principles, focusing on practical application in solving exam problems. Combines concept mastery with analytical training for Baccalaureate readiness.">
+                  مرجع يساعد التلميذ على فهم المفاهيم والقوانين الأساسية في الفيزياء والكيمياء، مع التركيز على كيفية توظيفها في حل التمارين. الكتاب يجمع بين الفهم والتطبيق والتدرب على منهجية التحليل والحل استعداداً للبكالوريا.
+                </p>
+
+                <!-- Strengths List -->
+                <ul class="book-strengths">
+                  <li data-ar="فهم القوانين" data-fr="Compréhension des lois" data-en="Mastery of laws & formulas">فهم القوانين</li>
+                  <li data-ar="تطبيقات وتمارين" data-fr="Applications et exercices" data-en="Applications & exercises">تطبيقات وتمارين</li>
+                  <li data-ar="منهجية التحليل" data-fr="Méthodologie d'analyse" data-en="Analytical methodology">منهجية التحليل</li>
+                  <li data-ar="التدريب على الحل" data-fr="Entraînement à la résolution" data-en="Problem-solving practice">التدريب على الحل</li>
+                  <li data-ar="التحضير للبكالوريا" data-fr="Préparation au Baccalauréat" data-en="Baccalaureate preparation">التحضير للبكالوريا</li>
+                </ul>
+
+                <!-- Actions -->
+                <div class="book-actions-group">
+                  <button type="button" class="btn btn-outline" onclick="openBookModal('physics')" aria-label="Book Information">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    <span data-ar="معلومات الكتاب" data-fr="Détails du Livre" data-en="Book Info">معلومات الكتاب</span>
+                  </button>
+                  <button type="button" class="btn btn-whatsapp" onclick="directOrderBook('physics')" aria-label="Order Book on WhatsApp">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <span data-ar="طلب الكتاب" data-fr="Commander" data-en="Order Book">طلب الكتاب</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- BOOK 3: SVT -->
+          <article class="book-card" id="card-svt">
+            <div class="book-card-inner">
+              <div class="book-cover-wrap">
+                <div class="cover-shine-effect"></div>
+                <img src="images/svt.jpg" alt="علوم الحياة والأرض: التحضير للبكالوريا" class="book-cover-img" onerror="handleImageError(this)">
+                <span class="book-tag tag-purple" data-ar="علوم الحياة والأرض" data-fr="SVT" data-en="Life & Earth Sciences">علوم الحياة والأرض</span>
+              </div>
+              <div class="book-body">
+                <div class="book-meta-top">
+                  <span class="book-edition-badge">IKIPAS EDITIONS</span>
+                  <span class="book-curriculum-badge">BAC MAROC</span>
+                </div>
+                <h3 class="book-title" data-ar="علوم الحياة والأرض: التحضير للبكالوريا" data-fr="SVT : Préparation au Bac" data-en="Life and Earth Sciences : Bac Preparation">علوم الحياة والأرض: التحضير للبكالوريا</h3>
+                <p class="book-desc" 
+                   data-ar="كتاب يساعد التلميذ على تنظيم مراجعة مادة علوم الحياة والأرض، وفهم المفاهيم الأساسية وربط المعلومات بطريقة واضحة، مع التدريب على أسئلة وتمارين تساعد على تطوير مهارات الفهم والتحليل والاستعداد للبكالوريا."
+                   data-fr="Un manuel pour structurer la révision des SVT, assimiler les notions fondamentales et relier clairement les connaissances, avec des entraînements ciblés pour développer l'analyse de documents et réussir le Bac."
+                   data-en="A structured textbook helping students review Earth & Life Sciences, master fundamental concepts, and develop document interpretation and analytical deduction skills required for Baccalaureate success.">
+                  كتاب يساعد التلميذ على تنظيم مراجعة مادة علوم الحياة والأرض، وفهم المفاهيم الأساسية وربط المعلومات بطريقة واضحة، مع التدريب على أسئلة وتمارين تساعد على تطوير مهارات الفهم والتحليل والاستعداد للبكالوريا.
+                </p>
+
+                <!-- Strengths List -->
+                <ul class="book-strengths">
+                  <li data-ar="تنظيم الدروس" data-fr="Organisation des cours" data-en="Structured lessons">تنظيم الدروس</li>
+                  <li data-ar="فهم المفاهيم" data-fr="Compréhension des notions" data-en="Core concept clarity">فهم المفاهيم</li>
+                  <li data-ar="تمارين وتطبيقات" data-fr="Exercices et applications" data-en="Exercises & applications">تمارين وتطبيقات</li>
+                  <li data-ar="مهارات التحليل" data-fr="Compétences d'analyse" data-en="Analytical deduction skills">مهارات التحليل</li>
+                  <li data-ar="الاستعداد للبكالوريا" data-fr="Préparation au Baccalauréat" data-en="Baccalaureate readiness">الاستعداد للبكالوريا</li>
+                </ul>
+
+                <!-- Actions -->
+                <div class="book-actions-group">
+                  <button type="button" class="btn btn-outline" onclick="openBookModal('svt')" aria-label="Book Information">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    <span data-ar="معلومات الكتاب" data-fr="Détails du Livre" data-en="Book Info">معلومات الكتاب</span>
+                  </button>
+                  <button type="button" class="btn btn-whatsapp" onclick="directOrderBook('svt')" aria-label="Order Book on WhatsApp">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <span data-ar="طلب الكتاب" data-fr="Commander" data-en="Order Book">طلب الكتاب</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- TEAM SECTION (فريق IKIPAS) -->
+    <section id="team" class="section team-section">
+      <div class="container">
+        
+        <!-- Section Header -->
+        <div class="section-header">
+          <div class="section-badge-wrap">
+            <span class="section-pill" data-ar="فريق العمل" data-fr="Notre Équipe" data-en="Our Team">فريق العمل</span>
+          </div>
+          <h2 class="section-title" data-ar="فريق IKIPAS" data-fr="L'équipe IKIPAS" data-en="IKIPAS Team">
+            فريق IKIPAS
+          </h2>
+          <p class="section-desc" 
+             data-ar="فريق متخصص ومكرس لمواكبة التلاميذ والطلبة وتقديم الاستشارة والموارد التي يحتاجون إليها."
+             data-fr="Une équipe dévouée pour accompagner les élèves et étudiants, et leur offrir le conseil et les ressources nécessaires."
+             data-en="A dedicated team to guide students and provide the mentorship and resources they need.">
+            فريق متخصص ومكرس لمواكبة التلاميذ والطلبة وتقديم الاستشارة والموارد التي يحتاجون إليها.
+          </p>
+        </div>
+
+        <!-- 3 Team Cards: أستاذ سمير, المهدي, سعد -->
+        <div class="team-grid">
+          
+          <!-- PERSON 1: أستاذ سمير -->
+          <div class="team-card">
+            <div class="team-card-inner">
+              <div class="team-photo-wrap">
+                <div class="team-img-glow"></div>
+                <img src="images/samir.jpg" alt="أستاذ سمير" class="team-img" onerror="handleImageError(this)">
+                <span class="team-badge badge-dr" data-ar="دكتوراه في التوجيه" data-fr="Doctorat en Orientation" data-en="PhD in Guidance">دكتوراه في التوجيه</span>
+              </div>
+              <div class="team-body">
+                <div class="team-name-wrap">
+                  <h3 class="team-name" data-ar="أستاذ سمير" data-fr="Professeur Samir" data-en="Professor Samir">أستاذ سمير</h3>
+                  <span class="verified-icon" title="Verified Expert">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                  </span>
+                </div>
+                <span class="team-role" data-ar="متخصص في مجال التوجيه" data-fr="Spécialiste en Orientation" data-en="Guidance Specialist">متخصص في مجال التوجيه</span>
+                <p class="team-bio" 
+                   data-ar="أستاذ سمير متخصص في مجال التوجيه، ويتميز بتكوين أكاديمي وخبرة في مواكبة التلاميذ والطلبة في اختيار المسارات الدراسية والمهنية المناسبة. حاصل على دراسة دكتوراه في مجال التوجيه، ويحرص على تقديم توجيه مبني على المعرفة والتحليل وفهم احتياجات كل طالب."
+                   data-fr="Pr. Samir est spécialiste dans le domaine de l'orientation, fort d'une formation académique et d'une expertise éprouvée dans l'accompagnement des élèves et étudiants dans le choix des filières appropriées. Titulaire d'études doctorales en orientation, il veille à offrir un conseil fondé sur la connaissance, l'analyse et la compréhension des besoins de chaque étudiant."
+                   data-en="Professor Samir specializes in orientation, with academic training and extensive experience in guiding students toward the right academic and professional tracks. With doctoral studies in orientation, he provides guidance grounded in knowledge, analysis, and individual student needs.">
+                  أستاذ سمير متخصص في مجال التوجيه، ويتميز بتكوين أكاديمي وخبرة في مواكبة التلاميذ والطلبة في اختيار المسارات الدراسية والمهنية المناسبة. حاصل على دراسة دكتوراه في مجال التوجيه، ويحرص على تقديم توجيه مبني على المعرفة والتحليل وفهم احتياجات كل طالب.
+                </p>
+                <div class="team-phone-box">
+                  <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  <span dir="ltr" class="phone-number-text">+212 661 862 506</span>
+                </div>
+                <div class="team-actions">
+                  <button type="button" class="btn btn-whatsapp w-full" onclick="chatWithTeam('samir')">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <span data-ar="تواصل عبر WhatsApp" data-fr="Contacter via WhatsApp" data-en="Chat via WhatsApp">تواصل عبر WhatsApp</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PERSON 2: المهدي -->
+          <div class="team-card">
+            <div class="team-card-inner">
+              <div class="team-photo-wrap">
+                <div class="team-img-glow"></div>
+                <img src="images/mehdi.jpg" alt="المهدي" class="team-img" onerror="handleImageError(this)">
+                <span class="team-badge badge-member" data-ar="عضو فريق IKIPAS" data-fr="Membre Équipe IKIPAS" data-en="IKIPAS Team Member">عضو فريق IKIPAS</span>
+              </div>
+              <div class="team-body">
+                <div class="team-name-wrap">
+                  <h3 class="team-name" data-ar="المهدي" data-fr="Mehdi" data-en="Mehdi">المهدي</h3>
+                  <span class="verified-icon" title="Verified Member">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                  </span>
+                </div>
+                <span class="team-role" data-ar="تطوير المحتوى والخدمات الرقمية" data-fr="Contenu & Services Numériques" data-en="Digital Content & Services">تطوير المحتوى والخدمات الرقمية</span>
+                <p class="team-bio" 
+                   data-ar="المهدي عضو ضمن فريق IKIPAS، يساهم في تطوير المحتوى والخدمات الرقمية للمنصة، ومواكبة المستخدمين وتسهيل الوصول إلى المعلومات والموارد التعليمية والتوجيهية."
+                   data-fr="Mehdi est membre de l'équipe IKIPAS. Il contribue au développement du contenu et des services numériques de la plateforme, à l'accompagnement des utilisateurs et à la facilitation de l'accès aux ressources éducatives et d'orientation."
+                   data-en="Mehdi is a member of the IKIPAS team, contributing to digital content and platform service development, user support, and seamless access to educational and guidance resources.">
+                  المهدي عضو ضمن فريق IKIPAS، يساهم في تطوير المحتوى والخدمات الرقمية للمنصة، ومواكبة المستخدمين وتسهيل الوصول إلى المعلومات والموارد التعليمية والتوجيهية.
+                </p>
+                <div class="team-phone-box">
+                  <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  <span dir="ltr" class="phone-number-text">+212 700 635 666</span>
+                </div>
+                <div class="team-actions">
+                  <button type="button" class="btn btn-whatsapp w-full" onclick="chatWithTeam('mehdi')">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <span data-ar="تواصل عبر WhatsApp" data-fr="Contacter via WhatsApp" data-en="Chat via WhatsApp">تواصل عبر WhatsApp</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PERSON 3: سعد -->
+          <div class="team-card">
+            <div class="team-card-inner">
+              <div class="team-photo-wrap">
+                <div class="team-img-glow"></div>
+                <img src="images/saad.jpg" alt="سعد" class="team-img" onerror="handleImageError(this)">
+                <span class="team-badge badge-member" data-ar="عضو فريق IKIPAS" data-fr="Membre Équipe IKIPAS" data-en="IKIPAS Team Member">عضو فريق IKIPAS</span>
+              </div>
+              <div class="team-body">
+                <div class="team-name-wrap">
+                  <h3 class="team-name" data-ar="سعد" data-fr="Saad" data-en="Saad">سعد</h3>
+                  <span class="verified-icon" title="Verified Member">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                  </span>
+                </div>
+                <span class="team-role" data-ar="مواكبة وتطوير تجربة المستخدمين" data-fr="Accompagnement & Relations" data-en="User Support & Experience">مواكبة وتطوير تجربة المستخدمين</span>
+                <p class="team-bio" 
+                   data-ar="سعد عضو ضمن فريق IKIPAS، يساهم في مواكبة المستخدمين وتطوير الخدمات المقدمة عبر المنصة، مع الحرص على تقديم تجربة احترافية وسهلة تساعد التلاميذ والطلبة على الوصول إلى المعلومات والموارد التي يحتاجون إليها."
+                   data-fr="Saad est membre de l'équipe IKIPAS. Il participe à l'accompagnement des utilisateurs et au développement des services de la plateforme, avec la volonté d'offrir une expérience fluide et professionnelle pour accéder facilement aux ressources."
+                   data-en="Saad is a member of the IKIPAS team, contributing to user support and platform service enhancements, dedicated to providing a seamless experience for students to access the resources they need.">
+                  سعد عضو ضمن فريق IKIPAS، يساهم في مواكبة المستخدمين وتطوير الخدمات المقدمة عبر المنصة، مع الحرص على تقديم تجربة احترافية وسهلة تساعد التلاميذ والطلبة على الوصول إلى المعلومات والموارد التي يحتاجون إليها.
+                </p>
+                <div class="team-phone-box">
+                  <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  <span dir="ltr" class="phone-number-text">+212 780 451 374</span>
+                </div>
+                <div class="team-actions">
+                  <button type="button" class="btn btn-whatsapp w-full" onclick="chatWithTeam('saad')">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <span data-ar="تواصل عبر WhatsApp" data-fr="Contacter via WhatsApp" data-en="Chat via WhatsApp">تواصل عبر WhatsApp</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- CONTACT & ORDER SECTION (اطلب كتابك الآن) -->
+    <section id="contact" class="section contact-section">
+      <div class="container">
+        
+        <div class="contact-grid">
+          
+          <!-- Contact Info Column -->
+          <div class="contact-info-col">
+            <div class="section-badge-wrap">
+              <span class="section-pill" data-ar="تواصل وطلب" data-fr="Commande & Contact" data-en="Order & Contact">تواصل وطلب</span>
+            </div>
+            <h2 class="contact-title" data-ar="اطلب كتابك الآن" data-fr="Commandez votre livre" data-en="Order Your Book Now">
+              اطلب كتابك الآن
+            </h2>
+            <p class="contact-lead" 
+               data-ar="أدخل معلوماتك، اختر الكتاب والكمية، ثم أرسل الطلب عبر WhatsApp. سيتوصل فريق IKIPAS بطلبك وسيتواصل معك في أقرب وقت ممكن."
+               data-fr="Entrez vos coordonnées, choisissez le livre et la quantité, puis envoyez votre commande via WhatsApp. L'équipe IKIPAS recevra votre demande et vous contactera dans les plus brefs délais."
+               data-en="Enter your details, select the book and quantity, then send the order via WhatsApp. The IKIPAS team will receive your request and contact you as soon as possible.">
+              أدخل معلوماتك، اختر الكتاب والكمية، ثم أرسل الطلب عبر WhatsApp. سيتوصل فريق IKIPAS بطلبك وسيتواصل معك في أقرب وقت ممكن.
+            </p>
+
+            <!-- Direct Contact Cards -->
+            <div class="contact-methods">
+              
+              <div class="method-card">
+                <div class="method-icon icon-green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                </div>
+                <div class="method-details">
+                  <span class="method-label" data-ar="رقم WhatsApp للطلبات والتواصل" data-fr="Numéro WhatsApp pour commandes" data-en="WhatsApp Orders Number">رقم WhatsApp للطلبات والتواصل</span>
+                  <a href="https://wa.me/212700635666" target="_blank" rel="noopener noreferrer" class="method-val" dir="ltr">+212 700 635 666</a>
+                </div>
+              </div>
+
+              <div class="method-card">
+                <div class="method-icon icon-blue">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                </div>
+                <div class="method-details">
+                  <span class="method-label" data-ar="التوصيل والتوزيع" data-fr="Livraison & Distribution" data-en="Delivery & Coverage">التوصيل والتوزيع</span>
+                  <span class="method-val" data-ar="توصيل سريع لجميع المدن المغربية 🇲🇦" data-fr="Livraison partout au Maroc 🇲🇦" data-en="Fast delivery across Morocco 🇲🇦">توصيل سريع لجميع المدن المغربية 🇲🇦</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Guarantee Box -->
+            <div class="guarantee-box">
+              <div class="guarantee-icon-wrap">
+                <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </div>
+              <span data-ar="متابعة مستمرة لطلبك وتواصل مباشر حتى الاستلام." data-fr="Suivi continu de votre commande jusqu'à réception." data-en="Continuous order follow-up until delivery.">متابعة مستمرة لطلبك وتواصل مباشر حتى الاستلام.</span>
+            </div>
+
+          </div>
+
+          <!-- Form Column -->
+          <div class="contact-form-col">
+            <div class="form-container-card">
+              <div class="form-card-glow"></div>
+              
+              <!-- ORDER FORM -->
+              <form id="orderForm" onsubmit="handleFormSubmit(event)" novalidate>
+                
+                <div class="form-header">
+                  <div class="form-icon-pill">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                  </div>
+                  <div>
+                    <h3 class="form-title" data-ar="نموذج الطلب عبر WhatsApp" data-fr="Formulaire de Commande WhatsApp" data-en="WhatsApp Order Form">نموذج الطلب عبر WhatsApp</h3>
+                    <p class="form-subtitle" data-ar="سيتم تجهيز رسالتك وإرسالها مباشرة إلى فريق IKIPAS" data-fr="Votre demande sera préparée et transmise à l'équipe IKIPAS" data-en="Your order message will be prepared and sent to IKIPAS">سيتم تجهيز رسالتك وإرسالها مباشرة إلى فريق IKIPAS</p>
+                  </div>
+                </div>
+
+                <div class="form-grid">
+                  
+                  <!-- Full Name -->
+                  <div class="form-group">
+                    <label for="fullname" class="form-label" data-ar="الاسم الكامل *" data-fr="Nom complet *" data-en="Full Name *">الاسم الكامل *</label>
+                    <div class="input-wrap">
+                      <input type="text" id="fullname" name="fullname" class="form-input" 
+                             data-placeholder-ar="مثال: يوسف العلمي" 
+                             data-placeholder-fr="Ex: Youssef El Alami" 
+                             data-placeholder-en="Ex: Youssef El Alami"
+                             placeholder="مثال: يوسف العلمي" required>
+                    </div>
+                  </div>
+
+                  <!-- City -->
+                  <div class="form-group">
+                    <label for="city" class="form-label" data-ar="المدينة *" data-fr="Ville *" data-en="City *">المدينة *</label>
+                    <div class="input-wrap">
+                      <input type="text" id="city" name="city" class="form-input" 
+                             data-placeholder-ar="مثال: الدار البيضاء، الرباط، مراكش..." 
+                             data-placeholder-fr="Ex: Casablanca, Rabat, Marrakech..." 
+                             data-placeholder-en="Ex: Casablanca, Rabat, Marrakech..."
+                             placeholder="مثال: الدار البيضاء، الرباط، مراكش..." required>
+                    </div>
+                  </div>
+
+                  <!-- Phone Number -->
+                  <div class="form-group">
+                    <label for="phoneNumber" class="form-label" data-ar="رقم الهاتف *" data-fr="Numéro de téléphone *" data-en="Phone Number *">رقم الهاتف *</label>
+                    <div class="input-wrap">
+                      <input type="tel" id="phoneNumber" name="phoneNumber" class="form-input" dir="ltr"
+                             data-placeholder-ar="06XX XX XX XX" 
+                             data-placeholder-fr="06XX XX XX XX" 
+                             data-placeholder-en="06XX XX XX XX"
+                             placeholder="06XX XX XX XX" required>
+                    </div>
+                  </div>
+
+                  <!-- Book Selection -->
+                  <div class="form-group">
+                    <label for="bookType" class="form-label" data-ar="نوع الكتاب *" data-fr="Type de livre *" data-en="Book Type *">نوع الكتاب *</label>
+                    <div class="input-wrap select-wrap">
+                      <select id="bookType" name="bookType" class="form-select" required>
+                        <option value="" disabled selected data-ar="-- اختر الكتاب المطلوب --" data-fr="-- Sélectionnez un livre --" data-en="-- Select a book --">-- اختر الكتاب المطلوب --</option>
+                        <option value="الرياضيات: التحضير للبكالوريا" data-ar="الرياضيات: التحضير للبكالوريا" data-fr="Mathématiques : Préparation au Bac" data-en="Mathematics : Baccalaureate Preparation">الرياضيات: التحضير للبكالوريا</option>
+                        <option value="الفيزياء والكيمياء: التحضير للبكالوريا" data-ar="الفيزياء والكيمياء: التحضير للبكالوريا" data-fr="Physique-Chimie : Préparation au Bac" data-en="Physics-Chemistry : Baccalaureate Preparation">الفيزياء والكيمياء: التحضير للبكالوريا</option>
+                        <option value="علوم الحياة والأرض: التحضير للبكالوريا" data-ar="علوم الحياة والأرض: التحضير للبكالوريا" data-fr="SVT : Préparation au Bac" data-en="Life and Earth Sciences : Bac Preparation">علوم الحياة والأرض: التحضير للبكالوريا</option>
+                        <option value="باقة الكتب الثلاثة (Maths + PC + SVT)" data-ar="باقة الكتب الثلاثة كاملة (Maths + PC + SVT)" data-fr="Pack Complet (Maths + PC + SVT)" data-en="Complete Pack (Maths + PC + SVT)">باقة الكتب الثلاثة كاملة (Maths + PC + SVT)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Quantity -->
+                  <div class="form-group">
+                    <label for="quantity" class="form-label" data-ar="الكمية *" data-fr="Quantité *" data-en="Quantity *">الكمية *</label>
+                    <div class="input-wrap">
+                      <input type="number" id="quantity" name="quantity" class="form-input" min="1" max="100" value="1" required>
+                    </div>
+                  </div>
+
+                  <!-- Optional Message -->
+                  <div class="form-group full-width">
+                    <label for="message" class="form-label" data-ar="الرسالة" data-fr="Message" data-en="Message">الرسالة</label>
+                    <div class="input-wrap">
+                      <textarea id="message" name="message" rows="3" class="form-textarea" 
+                                data-placeholder-ar="اكتب أي ملاحظة أو استفسار بخصوص الطلب أو التوصيل..." 
+                                data-placeholder-fr="Ajoutez une remarque ou une question sur la commande..." 
+                                data-placeholder-en="Add any note or question about your order..."
+                                placeholder="اكتب أي ملاحظة أو استفسار بخصوص الطلب أو التوصيل..."></textarea>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- Validation Error Banner -->
+                <div id="formErrorBanner" class="form-error-banner hidden" role="alert">
+                  <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                  <span id="formErrorText" data-ar="يرجى ملء جميع الحقول الإلزامية المطلوبة (الاسم، المدينة، الهاتف، ونوع الكتاب)." data-fr="Veuillez remplir tous les champs obligatoires (Nom, Ville, Téléphone, Livre)." data-en="Please fill in all mandatory fields (Name, City, Phone, Book).">يرجى ملء جميع الحقول الإلزامية المطلوبة (الاسم، المدينة، الهاتف، ونوع الكتاب).</span>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-submit" id="btnSubmitOrder">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  <span data-ar="إرسال الطلب عبر WhatsApp" data-fr="Envoyer la commande via WhatsApp" data-en="Send Order via WhatsApp">إرسال الطلب عبر WhatsApp</span>
+                </button>
+
+              </form>
+
+              <!-- SUCCESS MESSAGE CONTAINER -->
+              <div id="successMessage" class="success-screen hidden" aria-live="polite">
+                <div class="success-icon-wrap">
+                  <div class="success-icon-pulse"></div>
+                  <svg class="success-checkmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                
+                <h3 class="success-title" data-ar="تم إرسال طلبك بنجاح" data-fr="Votre commande a été envoyée avec succès" data-en="Your order was sent successfully">
+                  ✓ تم إرسال طلبك بنجاح
+                </h3>
+                
+                <p class="success-desc" 
+                   data-ar="شكراً لثقتك في IKIPAS. سيتم التواصل معك في أقرب وقت ممكن لتأكيد طلبك."
+                   data-fr="Merci pour votre confiance en IKIPAS. Nous vous contacterons dans les plus brefs délais pour confirmer votre commande."
+                   data-en="Thank you for trusting IKIPAS. We will contact you as soon as possible to confirm your order.">
+                  شكراً لثقتك في IKIPAS. سيتم التواصل معك في أقرب وقت ممكن لتأكيد طلبك.
+                </p>
+
+                <div class="success-actions">
+                  <button type="button" class="btn btn-primary" onclick="resetOrderForm()">
+                    <span data-ar="إرسال طلب جديد" data-fr="Nouvelle commande" data-en="New Order">إرسال طلب جديد</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-mesh" aria-hidden="true"></div>
+    <div class="container footer-container">
+      
+      <!-- Footer Brand -->
+      <div class="footer-brand-block">
+        <div class="footer-logo-wrap">
+          <img src="logo-ikipas.jpg" alt="IKIPAS" class="footer-logo" onerror="handleImageError(this)">
+        </div>
+        <p class="footer-slogan">
+          IKIPAS
+        </p>
+        <p class="footer-sub">
+          "Le premier pas vers votre passion"
+        </p>
+        <div class="footer-mission-note" data-ar="المنصة الرائدة في المرافقة والتوجيه وإصدارات التميز للبكالوريا." data-fr="La plateforme d'excellence pour l'orientation et la préparation au Bac." data-en="Leading platform for academic guidance and Baccalaureate preparation.">
+          المنصة الرائدة في المرافقة والتوجيه وإصدارات التميز للبكالوريا.
+        </div>
+      </div>
+
+      <!-- Footer Quick Links -->
+      <div class="footer-nav-block">
+        <h4 class="footer-heading" data-ar="روابط" data-fr="Liens" data-en="Links">روابط</h4>
+        <ul class="footer-links-list">
+          <li><a href="#home" data-ar="الرئيسية" data-fr="Accueil" data-en="Home">الرئيسية</a></li>
+          <li><a href="#about" data-ar="من نحن" data-fr="À propos" data-en="About Us">من نحن</a></li>
+          <li><a href="#books" data-ar="الكتب" data-fr="Livres" data-en="Books">الكتب</a></li>
+          <li><a href="#team" data-ar="الفريق" data-fr="Équipe" data-en="Team">الفريق</a></li>
+          <li><a href="#contact" data-ar="تواصل معنا" data-fr="Contact" data-en="Contact">تواصل معنا</a></li>
+        </ul>
+      </div>
+
+      <!-- Footer Languages & Contact -->
+      <div class="footer-lang-block">
+        <h4 class="footer-heading" data-ar="اللغات" data-fr="Langues" data-en="Languages">اللغات</h4>
+        <div class="footer-lang-buttons">
+          <button type="button" class="footer-lang-btn" onclick="setLanguage('ar')">العربية (AR)</button>
+          <button type="button" class="footer-lang-btn" onclick="setLanguage('fr')">Français (FR)</button>
+          <button type="button" class="footer-lang-btn" onclick="setLanguage('en')">English (EN)</button>
+        </div>
+        <div class="footer-contact-item">
+          <div class="footer-wa-icon-wrap">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </div>
+          <a href="https://wa.me/212700635666" target="_blank" rel="noopener noreferrer" dir="ltr">+212 700 635 666</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Copyright -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-content">
+        <p>© 2026 IKIPAS • All rights reserved</p>
+        <p class="footer-tagline" data-ar="الخطوة الأولى نحو شغفك ✦" data-fr="Le premier pas vers votre passion ✦" data-en="The first step towards your passion ✦">الخطوة الأولى نحو شغفك ✦</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- BOOK DETAILS MODAL -->
+  <div id="bookModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalBookTitle">
+    <div class="modal-backdrop" onclick="closeBookModal()"></div>
+    
+    <div class="modal-dialog">
+      <!-- Close Button -->
+      <button type="button" class="modal-close-btn" onclick="closeBookModal()" aria-label="Close modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+
+      <!-- Modal Content Container (populated dynamically via JavaScript) -->
+      <div id="modalContent" class="modal-body-wrapper">
+        <!-- Dynamic Book Content Injected Here -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Core JavaScript -->
+  <script type="module" src="/script.js"></script>
+</body>
+</html>

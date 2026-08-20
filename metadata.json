@@ -1,0 +1,6 @@
+{
+  "name": "IKIPAS",
+  "description": "منصة مغربية متخصصة في التوجيه الدراسي والمهني والكتب التعليمية والتحضير للبكالوريا",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
