@@ -219,11 +219,44 @@ const booksDatabase = {
 
 
 /* ==========================================================================
-   IMAGE FALLBACK HANDLER (Placeholder with "إضافة صورة" / "Ajouter une photo")
+   IMAGE FALLBACK HANDLER & EMBEDDED DATA RESILIENCE
    ========================================================================== */
 
+function getImageFileName(src) {
+  if (!src) return "";
+  const clean = src.split("?")[0].split("#")[0];
+  const parts = clean.split("/");
+  return parts[parts.length - 1];
+}
+
 function handleImageError(imgElement) {
-  if (!imgElement || imgElement.dataset.failed) return;
+  if (!imgElement) return;
+
+  const fileName = getImageFileName(imgElement.getAttribute("src"));
+  const retryCount = parseInt(imgElement.dataset.retries || "0", 10);
+
+  // Attempt 1: If images-data has the Base64 image, inject it directly
+  if (window.IKIPAS_IMAGES && window.IKIPAS_IMAGES[fileName] && retryCount === 0) {
+    imgElement.dataset.retries = "1";
+    imgElement.src = window.IKIPAS_IMAGES[fileName];
+    return;
+  }
+
+  // Attempt 2: Try alternative path (e.g. without images/ prefix or with images/ prefix)
+  if (retryCount === 1) {
+    imgElement.dataset.retries = "2";
+    const curSrc = imgElement.getAttribute("src") || "";
+    if (curSrc.startsWith("images/")) {
+      imgElement.src = curSrc.replace("images/", "");
+      return;
+    } else if (!curSrc.startsWith("data:") && !curSrc.startsWith("http")) {
+      imgElement.src = "images/" + fileName;
+      return;
+    }
+  }
+
+  // If already processed and failed, prevent infinite loops
+  if (imgElement.dataset.failed) return;
   imgElement.dataset.failed = "true";
 
   const placeholderLabels = {
@@ -248,7 +281,7 @@ function handleImageError(imgElement) {
     <span class="placeholder-sub">IKIPAS</span>
   `;
 
-  // Preserve class/styles if needed
+  // Hide image and append placeholder
   if (imgElement.parentElement) {
     imgElement.style.display = "none";
     imgElement.parentElement.appendChild(placeholderDiv);
@@ -674,10 +707,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // Apply stored language (defaults to Arabic)
   setLanguage(currentLanguage);
 
-  // Check all images for load error fallbacks
+  // Check all images for load error fallbacks and auto-heal
   document.querySelectorAll("img").forEach(img => {
-    if (!img.complete || img.naturalWidth === 0) {
-      img.addEventListener("error", () => handleImageError(img));
+    img.addEventListener("error", () => handleImageError(img));
+    
+    // Immediate check if broken or empty
+    if (img.complete && img.naturalWidth === 0) {
+      handleImageError(img);
     }
   });
 
